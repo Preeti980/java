@@ -1,5 +1,8 @@
+/**
+ * The class `StackB` in Java implements a stack using an ArrayList and provides methods for push, pop,
+ * peek, and checking if the stack is empty.
+ */
 import java.util.ArrayList;
-
 public class StackB {
     static class Stack {
         static ArrayList<Integer> list = new ArrayList<>();
@@ -7,21 +10,24 @@ public class StackB {
         public static boolean isEmpty() {
             return list.size() == 0;
         }
-
         // push
         public static void push(int data) {
             list.add(data);
         }
-
         // pop
         public static int pop() {
+            if(isEmpty()){
+                return -1;
+            }
             int top = list.get(list.size() - 1);// O(1) constant time operration
             list.remove(list.size() - 1);
             return top;
         }
-
         // peek only top ko nikalna hai aur return karna hai
         public static int peek() {
+            if(isEmpty()){
+                return -1;
+            }
             return list.get(list.size() - 1);
         }
     }
