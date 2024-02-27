@@ -103,3 +103,117 @@ public class StackB {
         }
     }
 }
+
+/**
+ * This Java class uses a Stack to push integers onto the stack and then print and pop them in a LIFO
+ * (Last In First Out) order.
+ * stack using java collection frame work
+ */
+import java.util.*;
+
+public class StackB {
+    public static void main(String args[]) {
+        // Stack s = new Stack();
+        Stack<Integer> s = new Stack<>();
+        s.push(1);
+        s.push(2);
+        s.push(3);
+        while (!s.isEmpty()) {
+            System.out.println(s.peek());
+            s.pop();
+        }
+    }
+}
+/**
+ * This Java class demonstrates a method to push an element to the bottom of a stack without using
+ * extra memory.
+ */
+import java.util.*;
+//push at the bottom of the stack 
+//O(n) without using extra memory
+public class StackB {
+    public static void pushAtBottom(Stack<Integer> s, int data) {
+        if (s.isEmpty()) {
+            s.push(data);
+            return;
+        }
+        int top = s.pop();
+        pushAtBottom(s, data);
+        s.push(top);
+    }
+    public static void main(String args[]) {
+        Stack<Integer> s = new Stack<>();
+        s.push(1);
+        s.push(2);
+        s.push(3);
+
+        pushAtBottom(s, 4);
+        while (!s.isEmpty()) {
+            System.out.println(s.pop());
+        }
+    }
+}
+/**
+ * The class StackB contains a method to reverse a given string using a stack data structure in Java.
+ */
+import java.util.*;
+
+public class StackB {
+    public static String reverseString(String str) {
+        Stack<Character> s = new Stack<>();
+        int idx = 0;
+        while (idx < str.lenght()) {
+            s.push(str.charAt(idx));
+            idx++;
+        }
+        StringBuilder result = new StringBuilder("");
+        while (!s.isEmpty()) {
+            char curr = s.pop();
+            result.append(curr);
+        }
+        return result.toString();
+    }
+    public static void main(String args[]) {
+        String str = "abc";
+        String result = reverseString(str);
+        System.out.println(result);
+    }
+}
+/**
+ * The StackB class in Java contains methods to reverse the order of elements in a stack and print the
+ * stack in the reversed order.
+ */
+import java.util.*;
+public class StackB {
+    public static void pushAtBottom(Stack<Integer> s, int data) {
+        if (s.isEmpty()) {
+            s.push(data);
+            return;
+        }
+        int top = s.pop();
+        pushAtBottom(s, data);
+        s.push(top);
+    }
+    public static void reverseStack(Stack<Integer> s) {
+        if (s.isEmpty()) {
+            return;
+        }
+        int top = s.pop();
+        reverseStack(s);
+        pushAtBottom(s, top);
+    }
+    public static void printStack(Stack<Integer> s) {
+        while (!s.isEmpty()) {
+            System.out.println(s.pop());
+        }
+    }
+    public static void main(String args[]) {
+        Stack<Integer> s = new Stack<>();
+        s.push(1);
+        s.push(2);
+        s.push(3);
+//3,2,1
+        reverseStack(s);
+        printStack(s);//1,2,3
+    }
+}
