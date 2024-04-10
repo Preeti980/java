@@ -277,3 +277,190 @@ public class BinarySearchTrees {
         printInRange(root, 5, 12);
     }
 }
+// Root to leaf path
+import java.util.*;
+public class BinarySearchTrees {
+    static class Node {
+        int data;
+        Node left;
+        Node right;
+        public Node(int data) {
+            this.data = data;
+            this.left = null;
+            this.right = null;
+        }
+    }
+
+    // implementation of binary tree
+    public static Node insert(Node root, int val) {
+        if (root == null) {
+            root = new Node(val);
+            return root;
+        }
+        if (root.data > val) {
+            // left subtree
+            root.left = insert(root.left, val);// insert ek pointer return karega jisko hum root.left ke ander store kar
+                                               // denge
+        } else {
+            // right subtree
+            root.right = insert(root.right, val);
+        }
+        return root;
+    }
+    public static void printPath(ArrayList<Integer> path) {
+        for (int i = 0; i < path.size(); i++) {
+            System.out.print(path.get(i) + "-> ");
+        }
+        System.out.println("null");
+    }
+
+    public static void printRoot2Leaf(Node root, ArrayList<Integer> path) {
+        if (root == null) {
+            return;
+        }
+        path.add(root.data); // arrayList me data add kar dena
+        if (root.left == null && root.right == null) {
+            printPath(path);
+        }
+        printRoot2Leaf(root.left, path);// assume that ki left se jitni cheeje add ho rhi hogi utni remove v ho rhi hogi
+        printRoot2Leaf(root.right, path);// ,,
+        path.remove(path.size() - 1);// root node ka data last index pe exist karta hai
+    }
+
+    public static void main(String args[]) {
+        int values[] = { 8, 5, 3, 1, 4, 6, 10, 11, 14 };
+        Node root = null; // in first step need to create null node
+        for (int i = 0; i < values.length; i++) {// insert values
+            root = insert(root, values[i]);
+        }  
+        printRoot2Leaf(root, new ArrayList<>());
+    }
+}
+//Validate BST
+
+import java.util.*;
+
+public class BinarySearchTrees {
+    static class Node {
+        int data;
+        Node left;
+        Node right;
+
+        public Node(int data) {
+            this.data = data;
+            this.left = null;
+            this.right = null;
+        }
+    }
+
+    // implementation of binary tree
+    public static Node insert(Node root, int val) {
+        if (root == null) {
+            root = new Node(val);
+            return root;
+        }
+        if (root.data > val) {
+            // left subtree
+            root.left = insert(root.left, val);// insert ek pointer return karega jisko hum root.left ke ander store kar
+                                               // denge
+        } else {
+            // right subtree
+            root.right = insert(root.right, val);
+        }
+        return root;
+    }
+
+    public static void printPath(ArrayList<Integer> path) {
+        for (int i = 0; i < path.size(); i++) {
+            System.out.print(path.get(i) + "-> ");
+        }
+        System.out.println("null");
+    }
+
+    public static void printRoot2Leaf(Node root, ArrayList<Integer> path) {
+        if (root == null) {
+            return;
+        }
+        path.add(root.data); // arrayList me data add kar dena
+        if (root.left == null && root.right == null) {
+            printPath(path);
+        }
+        printRoot2Leaf(root.left, path);// assume that ki left se jitni cheeje add ho rhi hogi utni remove v ho rhi hogi
+        printRoot2Leaf(root.right, path);// ,,
+        path.remove(path.size() - 1);// root node ka data last index pe exist karta hai
+    }
+
+    public static boolean isValidBST(Node root, Node min, Node max) {
+        if (root == null) {
+            return true;
+        }
+        if (min != null && root.data <= min.data) {
+            return false;
+        } else if (max != null && root.data >= max.data) {
+            return false;
+            return isValidBST(root.left, min, root) && isValidBST(root.right, root, max);
+        }
+    }
+
+    public static void main(String args[]) {
+        int values[] = { 8, 5, 3, 1, 4, 6, 10, 11, 14 };
+        Node root = null; // in first step need to create null node
+        for (int i = 0; i < values.length; i++) {// insert values
+            root = insert(root, values[i]);
+        }
+        if (isValidBST(root, null, null)) {
+            System.out.println("valid");
+        } else {
+            System.out.println("not valid");
+        }
+    }
+}
+//Mirror image of BST
+/*
+ *  8      |       8
+ * /  \    |      /  \
+ * 5   10  |     10   5
+ * /\   \  |     /   / \
+ * 3 6  11 |    11   6  3
+ */
+public class BinarySearchTrees {
+    static class Node {
+        int data;
+        Node left;
+        Node right;
+      public Node(int data) {
+            this.data = data;
+            this.left = null;
+            this.right = null;
+        }
+    }
+    public static Node createMirror(Node root) {
+        if (root == null) {
+            return null;
+        }
+        Node leftMirror = createMirror(root.left);
+        Node rightMirror = createMirror(root.right);
+        root.left = rightMirror;
+        root.right = leftMirror;
+        return root;
+    }
+    public static void preorder(Node root) {
+        if (root == null) {
+            return;
+        }
+        System.out.print(root.data + " ");
+        preorder(root.left);
+        preorder(root.right);
+    }
+    public static void main(String args[]) {
+        Node root = new Node(8);
+        root.left = new Node(5);
+        root.right = new Node(10);
+        root.left.left = new Node(3);
+        root.left.right = new Node(6);
+        root.right.right = new Node(11);
+        root = createMirror(root);
+        preorder(root);
+
+    }
+}
