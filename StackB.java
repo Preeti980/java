@@ -275,3 +275,114 @@ public class StackB {
         }
         System.out.println();
     }
+// valid parentheses
+public static boolean isvalid(String str) {
+        Stack<Character> s = new Stack<>();
+        for (int i = 0; i < str.length(); i++) {
+            char ch = str.charAt(i);
+            if (ch == '(' || ch == '{' || ch == '[') {
+                s.push(ch);
+            } else {
+                if (s.isEmpty()) {
+                    return false;
+                }
+                if ((s.peek() == '(' && ch == ')')
+                        || (s.peek() == '{' && ch == '}')
+                                | (s.peek() == '[' && ch == ']')) {
+                    s.pop();
+                } else {
+                    return false;
+                }
+            }
+        }
+        if (s.isEmpty()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+public static void main(String args[]){
+    String str = "({})[]";
+    System.out.println(isValid(str));
+}
+//Duplicate parentheses - imp - asked in google , microsoft
+public static boolean isDuplicate(String str) {
+        Stack<Character> s = new Stack<>();
+
+        for (int i = 0; i < str.length(); i++) {
+            char ch = str.charAt(i);
+
+            // closing case
+            if (ch == ')') {
+                int count = 0;
+                while (s.peek() != '(') {
+                    s.pop();
+                    count++;
+                }
+                if (count < 1) {
+                    return true;// duplicate
+                } else {
+                    s.pop();// opening pair
+                }
+            } else {
+                // opening
+                s.push(ch);
+            }
+        }
+        return false;
+    }
+
+    public static void main(String args[]) {
+        String str = "((a+b))";// true
+        String str2 = "(a+b)";// false
+        System.out.println(isDuplicate(str));
+    }
+}
+//maxArea in histogram : hard type problem
+public static void maxAreaHist(int arr[]) {
+        int maxArea = 0;
+        int nsr[] = new int[arr.length];
+        int nsl[] = new int[arr.length];
+        // next smaller rigth
+        Stack<Integer> s = new Stack<>();
+        for (int i = arr.length - 1; i >= 0; i--) {
+            while (!s.isEmpty() && arr[s.peek()] >= arr[i]) {
+                s.pop();
+            }
+            if (s.isEmpty()) {
+                nsr[i] = arr.length;
+            } else {
+                nsr[i] = s.peek();
+            }
+            s.push(i);
+        }
+
+        // next smaller left
+        s = new Stack<>();
+        for (int i = 0; i < arr.length; i++) {
+            while (!s.isEmpty() && arr[s.peek()] >= arr[i]) {
+                s.pop();
+            }
+            if (s.isEmpty()) {
+                nsl[i] = -1;
+            } else {
+                nsl[i] = s.peek();
+            }
+            s.push(i);
+        }
+        // currnt area: width = j-1-1 = nsr[i] -nsl[i] -1
+        for (int i = 0; i < arr.length; i++) {
+            int height = arr[i];
+            int width = nsr[i] - nsl[i] - 1;
+            int currArea = height * width;
+            maxArea = Math.max(currArea, maxArea);
+        }
+        System.out.println("max area in histogram =" + maxArea); // = 10
+    }
+
+    public static void main(String args[]) {
+        int arr[] = { 2, 1, 5, 6, 2, 3 };
+        maxAreaHist(arr);
+    }
+}
+//output = 10 
